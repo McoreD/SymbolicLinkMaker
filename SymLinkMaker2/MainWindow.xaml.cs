@@ -1,4 +1,5 @@
 ﻿using Gat.Controls;
+using HelpersLib;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Diagnostics;
