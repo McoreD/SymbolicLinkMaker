@@ -3,6 +3,7 @@ using MaterialDesignThemes.Wpf;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,7 +21,7 @@ namespace SymbolicLinkMaker.Wpf
 
         #region Methods
 
-        private OpenDialogViewModel BrowseFolder(string title = "Browse folder")
+        private string BrowseFolder(string title = "Browse folder")
         {
             OpenDialogView openDialog = new OpenDialogView();
             OpenDialogViewModel vm = (OpenDialogViewModel)openDialog.DataContext;
@@ -32,7 +33,12 @@ namespace SymbolicLinkMaker.Wpf
             vm.Owner = this;
             vm.StartupLocation = WindowStartupLocation.CenterScreen;
 
-            return vm;
+            if (vm.Show() == true)
+            {
+                return string.IsNullOrEmpty(vm.SelectedFilePath) ? vm.SelectedFolder.Path : vm.SelectedFilePath;
+            }
+
+            return null;
         }
 
         public async void CreateSymLink(string linkDir, string linkName, string targetDir)
@@ -148,25 +154,28 @@ namespace SymbolicLinkMaker.Wpf
 
                             //then copy the data in the link to target
                             //Now Create all of the directories
-                            try
-                            {
-                                foreach (string dirPath in Directory.GetDirectories(diLink.FullName, "*", SearchOption.AllDirectories))
-                                {
-                                    Directory.CreateDirectory(dirPath.Replace(diLink.FullName, diTarget.FullName));
-                                }
+                            await Task.Run(async () =>
+                             {
+                                 try
+                                 {
+                                     foreach (string dirPath in Directory.GetDirectories(diLink.FullName, "*", SearchOption.AllDirectories))
+                                     {
+                                         Directory.CreateDirectory(dirPath.Replace(diLink.FullName, diTarget.FullName));
+                                     }
 
-                                //Copy all the files
-                                foreach (string newPath in Directory.GetFiles(diLink.FullName, "*.*", SearchOption.AllDirectories))
-                                {
-                                    File.Copy(newPath, newPath.Replace(diLink.FullName, diTarget.FullName), true);
-                                }
-                            }
-                            catch
-                            {
-                                CustomMessageBox dlg2 = new CustomMessageBox("Could not copy contents of the source to the target directory!\nBut the data is still safe in the source directory.");
-                                await DialogHost.Show(dlg2);
-                                return;
-                            }
+                                     //Copy all the files
+                                     foreach (string newPath in Directory.GetFiles(diLink.FullName, "*.*", SearchOption.AllDirectories))
+                                     {
+                                         File.Copy(newPath, newPath.Replace(diLink.FullName, diTarget.FullName), true);
+                                     }
+                                 }
+                                 catch
+                                 {
+                                     CustomMessageBox dlg2 = new CustomMessageBox("Could not copy contents of the source to the target directory!\nBut the data is still safe in the source directory.");
+                                     await DialogHost.Show(dlg2);
+                                     return;
+                                 }
+                             });
 
                             try
                             {
@@ -276,21 +285,21 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseLinkDir_Click(object sender, RoutedEventArgs e)
         {
-            OpenDialogViewModel vm = BrowseFolder();
-            bool? result = vm.Show();
-
-            if (result == true)
+            string dirPath = BrowseFolder();
+            if (!string.IsNullOrEmpty(dirPath))
             {
-                DirectoryInfo diLinkDir = new DirectoryInfo(vm.SelectedFilePath);
-                if (chkLink.IsChecked == true)
                 {
-                    txtLinkDir.Text = diLinkDir.Parent.FullName;
-                    txtLinkName.Text = diLinkDir.Name;
-                }
-                else
-                {
-                    txtLinkDir.Text = diLinkDir.FullName;
-                    txtLinkName.Text = "";
+                    DirectoryInfo diLinkDir = new DirectoryInfo(dirPath);
+                    if (chkLink.IsChecked == true)
+                    {
+                        txtLinkDir.Text = diLinkDir.Parent.FullName;
+                        txtLinkName.Text = diLinkDir.Name;
+                    }
+                    else
+                    {
+                        txtLinkDir.Text = diLinkDir.FullName;
+                        txtLinkName.Text = "";
+                    }
                 }
             }
         }
@@ -303,12 +312,10 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseTargetDir_Click(object sender, RoutedEventArgs e)
         {
-            OpenDialogViewModel vm = BrowseFolder();
-            bool? result = vm.Show();
-
-            if (result == true)
+            string dirPath = BrowseFolder();
+            if (!string.IsNullOrEmpty(dirPath))
             {
-                DirectoryInfo diTargetDir = new DirectoryInfo(vm.SelectedFilePath);
+                DirectoryInfo diTargetDir = new DirectoryInfo(dirPath);
                 txtTargetDir.Text = diTargetDir.FullName;
             }
         }
