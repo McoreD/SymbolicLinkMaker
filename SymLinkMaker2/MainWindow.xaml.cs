@@ -24,5 +24,38 @@ namespace SymbolicLinkMaker.Wpf
         {
             InitializeComponent();
         }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            string[] paths = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+        }
+
+        private void btnBrowseLinkDir_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void btnClearLinkName_Click(object sender, RoutedEventArgs e)
+        {
+            txtLinkName.Clear();
+            txtLinkName.Focus();
+        }
+
+        private void btnBrowseTargetDir_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void FileExitCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void FileExitCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
     }
 }
