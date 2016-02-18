@@ -70,12 +70,19 @@ namespace SymbolicLinkMaker.Wpf
                 return;
             }
 
-            if (!Directory.Exists(Path.Combine(linkDir, linkName)))
+            string srcDirPath = Path.Combine(linkDir, linkName);
+            if (!Directory.Exists(srcDirPath))
             {
-                CustomMessageBox messageBox = new CustomMessageBox("Please input a Symbolic Link with a valid path.");
-                await DialogHost.Show(messageBox);
-                txtLinkDir.Focus();
-                return;
+                CustomMessageBox messageBox = new CustomMessageBox($"Would you like to create {srcDirPath}?", "Yes", "No");
+                string result = await DialogHost.Show(messageBox) as string;
+                if (result.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Helpers.CreateDirectoryIfNotExist(srcDirPath);
+                }
+                else
+                {
+                    return;
+                }
             }
 
             if (!Directory.Exists(targetDir))
@@ -131,7 +138,7 @@ namespace SymbolicLinkMaker.Wpf
                     //if it is not empty
                     if (fiTest.Length > 0 || diTest.Length > 0)
                     {
-                        CustomMessageBox msgBox = new CustomMessageBox("There is a folder with the same name as the Symbolic Link. \nShall I move all the files in it to Target folder\nand convert the folder into a Symbolic Link?\nNote: files with the same name will be overwritten without prompt.", "Yes", "No", "Cancel");
+                        CustomMessageBox msgBox = new CustomMessageBox("There is a folder with the same name as the symbolic Link. \nShall I move all the files in it to target folder\nand convert the folder into a symbolic Link?\nNote: files with the same name will be overwritten without prompt.", "Yes", "No", "Cancel");
                         string result = await DialogHost.Show(msgBox) as string;
 
                         if (result.Equals("1", StringComparison.InvariantCultureIgnoreCase))
@@ -193,11 +200,12 @@ namespace SymbolicLinkMaker.Wpf
                         {
                             try
                             {
+                                diLink.Attributes = FileAttributes.Normal;
                                 diLink.Delete(true);
                             }
                             catch
                             {
-                                CustomMessageBox dlg4 = new CustomMessageBox("Could not delete the source folder.");
+                                CustomMessageBox dlg4 = new CustomMessageBox($"Could not delete the source folder\n{diLink.FullName}");
                                 await DialogHost.Show(dlg4);
                                 return;
                             }
