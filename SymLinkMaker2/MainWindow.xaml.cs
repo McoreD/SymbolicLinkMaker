@@ -74,8 +74,8 @@ namespace SymbolicLinkMaker.Wpf
             if (!Directory.Exists(srcDirPath))
             {
                 CustomMessageBox messageBox = new CustomMessageBox($"Would you like to create {srcDirPath}?", "Yes", "No");
-                string result = await DialogHost.Show(messageBox) as string;
-                if (result.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                int result = (int)await DialogHost.Show(messageBox);
+                if (result == 1)
                 {
                     Helpers.CreateDirectoryIfNotExist(srcDirPath);
                 }
@@ -106,10 +106,10 @@ namespace SymbolicLinkMaker.Wpf
                 {
                     //ask user what to do? redirect the link or cancel operation
                     CustomMessageBox messageBox = new CustomMessageBox("Symbolic Link with same name exists. \nShall I modify it to point to the new target?", "Ok", "Cancel");
-                    string result = await DialogHost.Show(messageBox) as string;
+                    int result = (int)await DialogHost.Show(messageBox);
 
                     //if redirect, delete the link
-                    if (result.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                    if (result == 1)
                     {
                         try
                         {
@@ -139,9 +139,9 @@ namespace SymbolicLinkMaker.Wpf
                     if (fiTest.Length > 0 || diTest.Length > 0)
                     {
                         CustomMessageBox msgBox = new CustomMessageBox("There is a folder with the same name as the symbolic Link. \nShall I move all the files in it to target folder\nand convert the folder into a symbolic Link?\nNote: files with the same name will be overwritten without prompt.", "Yes", "No", "Cancel");
-                        string result = await DialogHost.Show(msgBox) as string;
+                        int result = (int)await DialogHost.Show(msgBox);
 
-                        if (result.Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                        if (result == 1)
                         {
                             //check if the target folder exists
 
@@ -196,7 +196,7 @@ namespace SymbolicLinkMaker.Wpf
                                 return;
                             }
                         }
-                        else if (result.Equals("2", StringComparison.InvariantCultureIgnoreCase))
+                        else if (result == 2)
                         {
                             try
                             {
