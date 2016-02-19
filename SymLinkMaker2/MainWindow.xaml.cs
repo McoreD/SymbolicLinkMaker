@@ -335,5 +335,17 @@ namespace SymbolicLinkMaker.Wpf
         }
 
         #endregion Buttons
+
+        private void chkLink_Checked(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void chkLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (chkLink.IsChecked == true)
+                lblSrcDir.Content = "Parent directory";
+            else
+                lblSrcDir.Content = "Source directory";
+        }
     }
 }
