@@ -9,7 +9,7 @@
         Title="Symbolic Link Maker" Width="525"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" AllowDrop="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" AllowDrop="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Icon="App.ico">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="FileExitCommandBinding_Executed" CanExecute="FileExitCommandBinding_CanExecute" />
     </Window.CommandBindings>
