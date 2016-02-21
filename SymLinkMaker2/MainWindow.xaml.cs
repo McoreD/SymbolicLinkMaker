@@ -22,26 +22,6 @@ namespace SymbolicLinkMaker.Wpf
 
         #region Methods
 
-        private string BrowseFolder(string title = "Browse folder")
-        {
-            OpenDialogView openDialog = new OpenDialogView();
-            OpenDialogViewModel vm = (OpenDialogViewModel)openDialog.DataContext;
-            vm.IsDirectoryChooser = true;
-            vm.Caption = "Browse for the link directory";
-            vm.DateFormat = OpenDialogViewModelBase.ISO8601_DateFormat;
-            vm.OpenText = "Select folder";
-            vm.SelectFolder = true;
-            vm.Owner = this;
-            vm.StartupLocation = WindowStartupLocation.CenterScreen;
-
-            if (vm.Show() == true)
-            {
-                return string.IsNullOrEmpty(vm.SelectedFilePath) ? vm.SelectedFolder.Path : vm.SelectedFilePath;
-            }
-
-            return null;
-        }
-
         public async void CreateSymLink(string linkDir, string linkName, string targetDir)
         {
             // TODO: MessageBoxStyle.Error etc.
@@ -294,7 +274,7 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseLinkDir_Click(object sender, RoutedEventArgs e)
         {
-            string dirPath = BrowseFolder();
+            string dirPath = Helpers.BrowseFolder("Browse for the link directory");
             if (!string.IsNullOrEmpty(dirPath))
             {
                 {
@@ -321,7 +301,7 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseTargetDir_Click(object sender, RoutedEventArgs e)
         {
-            string dirPath = BrowseFolder();
+            string dirPath = Helpers.BrowseFolder("Browse for the target directory");
             if (!string.IsNullOrEmpty(dirPath))
             {
                 DirectoryInfo diTargetDir = new DirectoryInfo(dirPath);
@@ -336,16 +316,20 @@ namespace SymbolicLinkMaker.Wpf
 
         #endregion Buttons
 
-        private void chkLink_Checked(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void chkLink_Click(object sender, RoutedEventArgs e)
         {
             if (chkLink.IsChecked == true)
+            {
                 lblSrcDir.Content = "Parent directory";
+                TextFieldAssist.SetHint(txtLinkDir, $@"C:\Users\{Environment.UserName}");
+                TextFieldAssist.SetHint(txtLinkName, "Dropbox");
+            }
             else
+            {
                 lblSrcDir.Content = "Source directory";
+                TextFieldAssist.SetHint(txtLinkDir, $@"C:\Users\{Environment.UserName}\Dropbox");
+                TextFieldAssist.SetHint(txtLinkName, "");
+            }
         }
     }
 }
