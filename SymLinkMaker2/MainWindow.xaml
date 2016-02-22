@@ -9,7 +9,7 @@
         Title="Symbolic Link Maker" Width="525"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" AllowDrop="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" AllowDrop="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Icon="App.ico">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Close" Executed="FileExitCommandBinding_Executed" CanExecute="FileExitCommandBinding_CanExecute" />
     </Window.CommandBindings>
@@ -44,10 +44,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Row="0" Grid.Column="1" x:Name="chkLink" Content="Convert the folder into a Symbolic Link" VerticalContentAlignment="Center" Margin="5" Checked="chkLink_Checked" Click="chkLink_Click" />
+                <CheckBox Grid.Row="0" Grid.Column="1" x:Name="chkLink" Content="Convert the folder into a Symbolic Link" VerticalContentAlignment="Center" Margin="5" Click="chkLink_Click" />
 
                 <Label Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" x:Name="lblSrcDir" Content="Source directory" />
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtLinkDir" VerticalContentAlignment="Center"></TextBox>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtLinkDir" VerticalContentAlignment="Center" md:TextFieldAssist.Hint="C:\Users\Michael\Dropbox" ></TextBox>
                 <Button Grid.Row="1" Grid.Column="2" x:Name="btnBrowseLinkDir" Content="Browse" Margin="5" Click="btnBrowseLinkDir_Click"></Button>
 
                 <Label Grid.Row="2" Grid.Column="0" VerticalContentAlignment="Center" Content="Symbolic link name"></Label>
@@ -55,7 +55,7 @@
                 <Button Grid.Row="2" Grid.Column="2" x:Name="btnClearLinkName" Content="Clear" Margin="5" Click="btnClearLinkName_Click"></Button>
 
                 <Label Grid.Row="3" Grid.Column="0" VerticalContentAlignment="Center" Content="Target directory"></Label>
-                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtTargetDir" VerticalContentAlignment="Center"></TextBox>
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtTargetDir" VerticalContentAlignment="Center" md:TextFieldAssist.Hint="D:\Dropbox"></TextBox>
                 <Button Grid.Row="3" Grid.Column="2" x:Name="btnBrowseTargetDir"  Content="Browse" Margin="5" Click="btnBrowseTargetDir_Click"></Button>
 
                 <Button Grid.Row="4" Grid.Column="2" x:Name="btnCreate" Content="Create" Margin="5" Click="btnCreate_Click"></Button>
