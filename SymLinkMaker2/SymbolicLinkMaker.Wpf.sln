@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymbolicLinkMaker.Wpf", "SymbolicLinkMaker.Wpf.csproj", "{4D4EEDD7-7A65-4F61-919F-60CB1A00FC74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpersLib", "..\..\WpfHelpersLib\HelpersLib\HelpersLib.csproj", "{43B77CEB-6410-43AD-842E-726A129FA4BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpersLib", "..\..\ShareX.Wpf/ShareX.HelpersLib\ShareX.HelpersLib.Wpf.csproj", "{43B77CEB-6410-43AD-842E-726A129FA4BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

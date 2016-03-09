@@ -6,7 +6,7 @@
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:SymbolicLinkMaker.Wpf"
         mc:Ignorable="d"
-        Title="Symbolic Link Maker" Width="525"
+        Title="Symbolic Link Maker"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto" AllowDrop="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Icon="App.ico">

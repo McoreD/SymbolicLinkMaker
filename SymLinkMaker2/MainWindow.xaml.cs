@@ -57,7 +57,7 @@ namespace SymbolicLinkMaker.Wpf
                 int result = (int)await DialogHost.Show(messageBox);
                 if (result == 1)
                 {
-                    Helpers.CreateDirectoryIfNotExist(srcDirPath);
+                    Helper.CreateDirectoryFromDirectoryPath(srcDirPath);
                 }
                 else
                 {
@@ -274,7 +274,7 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseLinkDir_Click(object sender, RoutedEventArgs e)
         {
-            string dirPath = Helpers.BrowseFolder("Browse for the link directory");
+            string dirPath = Helper.BrowseFolder("Browse for the link directory");
             if (!string.IsNullOrEmpty(dirPath))
             {
                 {
@@ -301,7 +301,7 @@ namespace SymbolicLinkMaker.Wpf
 
         private void btnBrowseTargetDir_Click(object sender, RoutedEventArgs e)
         {
-            string dirPath = Helpers.BrowseFolder("Browse for the target directory");
+            string dirPath = Helper.BrowseFolder("Browse for the target directory");
             if (!string.IsNullOrEmpty(dirPath))
             {
                 DirectoryInfo diTargetDir = new DirectoryInfo(dirPath);
